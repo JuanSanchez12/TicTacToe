@@ -10,7 +10,7 @@ public class Computer extends Player
         computerPiece = 'o';
     }
 
-    public void computerTurn(Board gameBoard, Referee ref)
+    public void computerTurn(Board gameBoard)
     {
       int row = 0;
       int column = 0;
@@ -29,7 +29,7 @@ public class Computer extends Player
           else if (move == 8) {row = 2; column = 1;}
           else if (move == 9) {row = 2; column = 2;}
   
-          if (ref.validMove(gameBoard.getBoard(), row, column))
+          if (gameBoard.validMove(row, column))
           {
             System.out.println("Computer entered " + move);
             break;

@@ -5,44 +5,62 @@ public class TicTacToe
     public static void main(String[] args)
     {
         Scanner in = new Scanner(System.in);
-        Board gameBoard = new Board();
-        Referee ref = new Referee();
-        Computer computer = new Computer();
-        
 
         System.out.println("Welcome to Tic Tac Toe!");
-        System.out.println("Input 1 for 1 player or 2 for 2 player");
-        while (!in.hasNextInt())
+        TicTacToeGame();
+
+        while (true)
         {
-            System.out.println("Invalid! Input 1 for 1 player or 2 for 2 player");
-            in.next();
+            System.out.println("Do you want to play again?");
+            String playAgainAnswer = in.next();
+
+            if (playAgainAnswer.equals("yes") || playAgainAnswer.equals("Yes"))
+            {
+               TicTacToeGame();
+            }
+            else if(playAgainAnswer.equals("no") || playAgainAnswer.equals("No"))
+            {
+                System.out.println("Thank you for Playing!");
+                break;
+            }
+            else
+            {
+                System.out.println("Invalid Answer! Do you want to play again?");
+                playAgainAnswer = in.next();
+            }
         }
+        in.close();
+    }
+
+    public static void TicTacToeGame()
+    {
+        Scanner in = new Scanner(System.in);
+        Board gameBoard = new Board();
+        Computer computer = new Computer();
+
+        System.out.println("Input 1 for 1 player or 2 for 2 player");
         int numOfPlayers = in.nextInt();
         
         while (true)
         {
             if (numOfPlayers == 1)
             {
-                System.out.println("Enter your name, Player 1:");
-                String name = in.next();
-                System.out.println("Enter your gamepiece, Player 1:");
-                char gamePiece = in.next().charAt(0);
-                Player p1 = new Player(name, gamePiece);
+                Player p1 = Player.playerInfo(in, "Player 1:");
                 
                 while (true)
                 {
-                    p1.playerTurn(gameBoard, ref, p1.getGamePiece());
+                    p1.playerTurn(gameBoard, p1.getGamePiece());
                     gameBoard.displayBoard();
-                    System.err.println();
-                    if (ref.checkWinner(gameBoard, p1.getPlayerName(), p1.getGamePiece())) 
+                    System.out.println();
+                    if (gameBoard.checkWinner(p1.getPlayerName(), p1.getGamePiece())) 
                     {
                         break;
                     }
 
-                    computer.computerTurn(gameBoard, ref);
+                    computer.computerTurn(gameBoard);
                     gameBoard.displayBoard();
-                    System.err.println();
-                    if (ref.checkWinner(gameBoard, computer.getPlayerName(), computer.getGamePiece())) 
+                    System.out.println();
+                    if (gameBoard.checkWinner(computer.getPlayerName(), computer.getGamePiece())) 
                     {
                         break;
                     }
@@ -52,32 +70,23 @@ public class TicTacToe
 
             if (numOfPlayers == 2)
             {
-                System.out.println("Enter your name, Player 1:");
-                String name = in.next();
-                System.out.println("Enter your gamepiece, Player 1:");
-                char gamePiece = in.next().charAt(0);
-                Player p1 = new Player(name, gamePiece);
-
-                System.out.println("Enter your name, Player 2:");
-                name = in.next();
-                System.out.println("Enter your gamepiece, Player 2:");
-                gamePiece = in.next().charAt(0);
-                Player p2 = new Player(name, gamePiece);
+                Player p1 = Player.playerInfo(in, "Player 1:");
+                Player p2 = Player.playerInfo(in, "Player 2:");
                 
                 while (true)
                 {
-                    p1.playerTurn(gameBoard, ref, p1.getGamePiece());
+                    p1.playerTurn(gameBoard, p1.getGamePiece());
                     gameBoard.displayBoard();
-                    System.err.println();
-                    if (ref.checkWinner(gameBoard, p1.getPlayerName(), p1.getGamePiece())) 
+                    System.out.println();
+                    if (gameBoard.checkWinner(p1.getPlayerName(), p1.getGamePiece())) 
                     {
                         break;
                     }
 
-                    p2.playerTurn(gameBoard, ref, p2.getGamePiece());
+                    p2.playerTurn(gameBoard, p2.getGamePiece());
                     gameBoard.displayBoard();
-                    System.err.println();
-                    if (ref.checkWinner(gameBoard, p2.getPlayerName(), p2.getGamePiece())) 
+                    System.out.println();
+                    if (gameBoard.checkWinner(p2.getPlayerName(), p2.getGamePiece())) 
                     {
                         break;
                     }
@@ -91,6 +100,5 @@ public class TicTacToe
                 numOfPlayers = in.nextInt();
             }
         }
-        in.close();
     }
 }

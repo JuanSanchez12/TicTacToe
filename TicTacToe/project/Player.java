@@ -20,6 +20,16 @@ public class Player
         this.gamePiece = gamePiece;
     }
 
+    public static Player playerInfo(Scanner in, String playerLabel)
+    {
+        System.out.println("Enter your name, " + playerLabel);
+        String name = in.next();
+        System.out.println("Enter your gamepiece, " + playerLabel);
+        char gamePiece = in.next().charAt(0);
+
+        return new Player(name, gamePiece);
+    }
+
     public String getPlayerName()
     {
         return playerName;
@@ -30,7 +40,7 @@ public class Player
         return gamePiece;
     }
 
-    public void playerTurn(Board gameBoard, Referee ref, char gamePiece) 
+    public void playerTurn(Board gameBoard, char gamePiece) 
     {
         int row = 0;
         int column = 0;
@@ -42,24 +52,16 @@ public class Player
             int move = in.nextInt();
 
             if (move == 1) {row = 0; column = 0;}
-
             else if (move == 2) {row = 0; column = 1;}
-
             else if (move == 3) {row = 0; column = 2;}
-
             else if (move == 4) {row = 1; column = 0;}
-
             else if (move == 5) {row = 1; column = 1;}
-
             else if (move == 6) {row = 1; column = 2;}
-
             else if (move == 7) {row = 2; column = 0;}
-
             else if (move == 8) {row = 2; column = 1;}
-
             else if (move == 9) {row = 2; column = 2;}
 
-            if (ref.validMove(gameBoard.getBoard(), row, column))
+            if (gameBoard.validMove(row, column))
             {
                 break;
             }
